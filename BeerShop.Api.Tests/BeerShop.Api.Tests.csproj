@@ -64,7 +64,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Register\Unity.cs" />
+    <Compile Include="DIController\Unity.cs" />
     <Compile Include="Stubs\FakeBeerDbSet.cs" />
     <Compile Include="Stubs\FakeBeerShopContext.cs" />
     <Compile Include="Stubs\FakeBreweryDbSet.cs" />

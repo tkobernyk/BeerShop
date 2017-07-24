@@ -3,7 +3,7 @@ using BeerShop.Api.Tests.Stubs;
 using Microsoft.Practices.Unity;
 
 
-namespace BeerShop.Api.Tests.Register
+namespace BeerShop.Api.Tests.DIController
 {
     class Unity
     {

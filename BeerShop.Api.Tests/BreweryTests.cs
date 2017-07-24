@@ -2,10 +2,10 @@
 using BeerShop.DataStore;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BeerShop.Api.Tests.Register;
 using BeerShop.Api.Controllers;
 using System.Web.Http.Results;
 using BeerShop.DataStore.Models;
+using BeerShop.Api.Tests.DIController;
 
 namespace BeerShop.Api.Tests
 {
