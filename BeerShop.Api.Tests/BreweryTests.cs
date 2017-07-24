@@ -1,67 +1,55 @@
-﻿using BeerShop.DataStore;
-using BeerShop.Api.Tests.Stubs;
-using BeerShop.DataStore.Models;
+﻿using System.Linq;
+using BeerShop.DataStore;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using System.Collections.ObjectModel;
+using BeerShop.Api.Tests.Register;
+using BeerShop.Api.Controllers;
+using System.Web.Http.Results;
+using BeerShop.DataStore.Models;
 
 namespace BeerShop.Api.Tests
 {
     [TestClass]
     public class BreweryTests
     {
-        private IBeerShopContext _dbContext;
-        public BreweryTests()
+        private readonly IBeerShopContext _dbContext;
+
+        public BreweryTests() : this(Unity.Register().Resolve<IBeerShopContext>())
+        {}
+
+        public BreweryTests(IBeerShopContext dbContext)
         {
-            Init();
-        }
-        [TestMethod]
-        public void AddBreweryTest()
-        {
+            _dbContext = dbContext;
         }
 
-        private void Init()
+        [TestMethod]
+        public void GetBreweriesTest()
         {
-            _dbContext = new FakeBeerShopContext
-            {
-                Breweries = {
-                    new Brewery {
-                        Id = 1,
-                        Name = "Brewery1"
-                    },
-                    new Brewery
-                    {
-                        Id = 2,
-                        Name = "Brewery2"
-                    }
-                }
-            };
-            _dbContext.Beers = new FakeBeerDbSet{
-                new Beer
-                {
-                    Id = 1,
-                    Name = "Beer1",
-                    Volume = 0.5M,
-                    Country = "Ukraine",
-                    Breweries = new Collection<Brewery> { _dbContext.Breweries.Find(1) }
-                },
-                new Beer
-                {
-                    Id = 2,
-                    Name = "Beer2",
-                    Volume = 0.5M,
-                    Country = "Ukraine",
-                    Breweries = new Collection<Brewery> { _dbContext.Breweries.Find(2) }
-                },
-                new Beer
-                {
-                    Id = 3,
-                    Name = "Beer3",
-                    Volume = 0.33M,
-                    Country = "Ukraine",
-                    Breweries = new Collection<Brewery> { _dbContext.Breweries.Find(1), _dbContext.Breweries.Find(2) }
-                }
-            };
+            var controller = new BreweriesController(_dbContext);
+            var breweries = controller.GetBreweries();
+            Assert.IsNotNull(breweries);
+            Assert.AreEqual(breweries, _dbContext.Breweries.AsQueryable());
+        }
+
+        [TestMethod]
+        public void GetBreweryById()
+        {
+            var id = 1;
+            var controller = new BreweriesController(_dbContext);
+            var result = controller.GetBrewery(id) as OkNegotiatedContentResult<Brewery>;
+            Assert.IsNotNull(result);
+            var brewery = result.Content;
+            Assert.IsNotNull(brewery);
+            Assert.AreEqual(brewery, _dbContext.Breweries.Find(id));
+        }
+        [TestMethod]
+        public void GetNotFoundResult()
+        {
+            var id = 10;
+            var controller = new BreweriesController(_dbContext);
+            var result = controller.GetBrewery(id);
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
     }
 }

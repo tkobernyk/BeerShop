@@ -7,6 +7,8 @@ namespace BeerShop.Api
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(FormattersConfig.Register);
+            GlobalConfiguration.Configure(UnityConfig.RegisterComponents);
         }
     }
 }
