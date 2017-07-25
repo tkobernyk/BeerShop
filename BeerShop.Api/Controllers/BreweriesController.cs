@@ -1,50 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BeerShop.DataStore;
+using BeerShop.DataStore.Infrastructure.Repository;
 using BeerShop.DataStore.Models;
+using BeerShop.DataStore.Infrastructure.Exception;
 
 namespace BeerShop.Api.Controllers
 {
     public class BreweriesController : ApiController
     {
-        private readonly IBeerShopContext _dbContext;
+        private readonly IRepository<Brewery> _repository;
 
-        public BreweriesController(IBeerShopContext dbContext)
+        public BreweriesController(IRepository<Brewery> repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         // GET: api/Breweries
-        public IQueryable<Brewery> GetBreweries()
+        public IEnumerable<Brewery> GetBreweries()
         {
-            return _dbContext.Breweries;
+            return _repository.GetAll();
         }
 
         // GET: api/Breweries/5
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult GetBrewery(int id)
         {
-            Brewery brewery = _dbContext.Breweries.Find(id);
+            Brewery brewery = _repository.GetById(id);
             if (brewery == null)
             {
                 return NotFound();
             }
-
             return Ok(brewery);
+        }
+
+        // GET: api/Breweries/Brewery1
+        [ResponseType(typeof(IEnumerable<Brewery>))]
+        public IHttpActionResult GetBreweryByName(string name)
+        {
+            var breweries = _repository.GetByName(name);
+            if (breweries == null || breweries.Count() == 0)
+            {
+                return NotFound();
+            }
+            return Ok(breweries);
         }
 
         // PUT: api/Breweries/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrewery(int id, Brewery brewery)
         {
+            Brewery updatedBrewery = new Brewery { Id = id };
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -54,25 +62,17 @@ namespace BeerShop.Api.Controllers
             {
                 return BadRequest();
             }
-
-            _dbContext.Entry(brewery).State = EntityState.Modified;
-
             try
             {
-                _dbContext.SaveChanges();
+                updatedBrewery = _repository.Update(id, brewery);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BreweryExists(id))
+            catch (EntityNotFoundException)
+            { 
+                if (!BreweryExists(updatedBrewery.Id))
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -84,41 +84,34 @@ namespace BeerShop.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            _dbContext.Breweries.Add(brewery);
-            _dbContext.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = brewery.Id }, brewery);
+            var newBrewery = _repository.Add(brewery);
+            return CreatedAtRoute("DefaultApi", new { id = newBrewery.Id }, newBrewery);
         }
 
         // DELETE: api/Breweries/5
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult DeleteBrewery(int id)
         {
-            Brewery brewery = _dbContext.Breweries.Find(id);
+            Brewery brewery = _repository.GetById(id);
             if (brewery == null)
             {
                 return NotFound();
             }
-
-            _dbContext.Breweries.Remove(brewery);
-            _dbContext.SaveChanges();
-
-            return Ok(brewery);
+            return Ok(_repository.Delete(brewery));
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _dbContext.Dispose();
+                _repository.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool BreweryExists(int id)
         {
-            return _dbContext.Breweries.Count(e => e.Id == id) > 0;
+            return _repository.GetById(id) != null;
         }
     }
 }

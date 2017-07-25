@@ -23,11 +23,6 @@ namespace BeerShop.Api.Tests.Stubs
             throw new NotImplementedException("This method hasn't implemented yet!");
         }
 
-        public virtual T FindByName(params object[] keyValues)
-        {
-            throw new NotImplementedException("This method hasn't implemented yet!");
-        }
-
         public T Add(T item)
         {
             _data.Add(item);

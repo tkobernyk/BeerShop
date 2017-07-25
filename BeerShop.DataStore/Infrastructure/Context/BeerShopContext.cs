@@ -1,11 +1,11 @@
 ﻿using System.Data.Entity;
 using BeerShop.DataStore.Models;
 
-namespace BeerShop.DataStore
+namespace BeerShop.DataStore.Infrastructure.Context
 {
     public class BeerShopContext : DbContext, IBeerShopContext
     {
-        public BeerShopContext(): base()
+        public BeerShopContext(): base("")
         {}
 
         public IDbSet<Brewery> Breweries { get; set; }

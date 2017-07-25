@@ -9,9 +9,5 @@ namespace BeerShop.Api.Tests.Stubs
         {
             return this.SingleOrDefault(b => b.Id == (int)keyValues.Single());
         }
-        public override Brewery FindByName(params object[] keyValues)
-        {
-            return this.SingleOrDefault(b => b.Name == (string)keyValues.Single());
-        }
     }
 }

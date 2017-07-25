@@ -1,12 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Data.Entity;
 using BeerShop.DataStore.Models;
-using BeerShop.DataStore;
+using BeerShop.DataStore.Infrastructure.Context;
 using System.Collections.ObjectModel;
 
 namespace BeerShop.Api.Tests.Stubs
 {
-    class FakeBeerShopContext : DbContext, IBeerShopContext
+    class FakeBeerShopContext : IBeerShopContext
     {
         public FakeBeerShopContext()
         {
@@ -15,6 +16,16 @@ namespace BeerShop.Api.Tests.Stubs
 
         public IDbSet<Brewery> Breweries { get; set; }
         public IDbSet<Beer> Beers { get; set; }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int SaveChanges()
+        {
+            return 1;
+        }
 
         private void Init()
         {

@@ -2,7 +2,7 @@
 using BeerShop.DataStore.Models;
 using System.Data.Entity.Infrastructure;
 
-namespace BeerShop.DataStore
+namespace BeerShop.DataStore.Infrastructure.Context
 {
     public interface IBeerShopContext
     {
@@ -10,7 +10,6 @@ namespace BeerShop.DataStore
         IDbSet<Beer> Beers { get; set; }
 
         int SaveChanges();
-        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         void Dispose();
     }
