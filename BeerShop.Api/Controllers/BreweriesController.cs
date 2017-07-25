@@ -25,7 +25,7 @@ namespace BeerShop.Api.Controllers
 
         // GET: api/Breweries/Brewery1
         [ResponseType(typeof(IEnumerable<Brewery>))]
-        public IHttpActionResult GetBreweryByName(string name)
+        public IHttpActionResult GetBreweriesByName(string name)
         {
             return GetByName(name);
         }

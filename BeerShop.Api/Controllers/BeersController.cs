@@ -13,12 +13,14 @@ namespace BeerShop.Api.Controllers
         public BeersController(IRepository<Beer> repository) : base(repository) {}
 
         // GET: api/Beers
+        [HttpGet]
         public IEnumerable<Beer> GetBeers()
         {
             return GetAll();
         }
 
         // GET: api/Beers/5
+        [HttpGet]
         [ResponseType(typeof(Beer))]
         public IHttpActionResult GetBeer(int id)
         {
@@ -26,8 +28,9 @@ namespace BeerShop.Api.Controllers
         }
 
         // GET: api/Beers/5
+        [HttpGet]
         [ResponseType(typeof(IEnumerable<Beer>))]
-        public IHttpActionResult GetBeerByName(string name)
+        public IHttpActionResult GetBeersByName(string name)
         {
             return GetByName(name);
         }

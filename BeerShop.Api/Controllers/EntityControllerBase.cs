@@ -18,11 +18,11 @@ namespace BeerShop.Api.Controllers
             _repository = repository;
         }
 
-        public virtual IEnumerable<T> GetAll()
+        protected virtual IEnumerable<T> GetAll()
         {
             return _repository.GetAll();
         }
-        public virtual IHttpActionResult GetById(int id)
+        protected virtual IHttpActionResult GetById(int id)
         {
             T entity = _repository.GetById(id);
             if (entity == null)
@@ -32,7 +32,7 @@ namespace BeerShop.Api.Controllers
             return Ok(entity);
         }
 
-        public virtual IHttpActionResult GetByName(string name)
+        protected virtual IHttpActionResult GetByName(string name)
         {
             var entities = _repository.GetByName(name);
             if (entities == null || entities.Count() == 0)
@@ -42,7 +42,7 @@ namespace BeerShop.Api.Controllers
             return Ok(entities);
         }
 
-        public virtual IHttpActionResult Put(int id, T entity)
+        protected virtual IHttpActionResult Put(int id, T entity)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace BeerShop.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        public virtual IHttpActionResult Post(T entity)
+        protected virtual IHttpActionResult Post(T entity)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace BeerShop.Api.Controllers
             return CreatedAtRoute("DefaultApi", new { id = addedEntity.Id }, addedEntity);
         }
 
-        public virtual IHttpActionResult Delete(int id)
+        protected virtual IHttpActionResult Delete(int id)
         {
             T entity = _repository.GetById(id);
             if (entity == null)

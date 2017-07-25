@@ -62,7 +62,7 @@ namespace BeerShop.Api.Tests
             var name = "Brewery1";
             var testBreweries = _repository.GetByName(name);
 
-            var result = _controller.GetBreweryByName(name) 
+            var result = _controller.GetBreweriesByName(name) 
                 as OkNegotiatedContentResult<IEnumerable<Brewery>>;
 
             Assert.IsNotNull(result);
@@ -75,7 +75,7 @@ namespace BeerShop.Api.Tests
         public void FaliedGetResultByName()
         {
             var name = "test";
-            var result = _controller.GetBreweryByName(name);
+            var result = _controller.GetBreweriesByName(name);
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
