@@ -15,6 +15,7 @@ namespace BeerShop.DataStore.Models
         [Required]
         public decimal Volume { get; set; }
         public string Country { get; set; }
+        public decimal Price { get; set; }
         public ICollection<Brewery> Breweries { get; set; }
     }
 }

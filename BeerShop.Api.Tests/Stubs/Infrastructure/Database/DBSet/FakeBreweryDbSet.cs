@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using BeerShop.DataStore.Models;
 
-namespace BeerShop.Api.Tests.Stubs
+namespace BeerShop.Api.Tests.Stubs.Infrastructure.Database.DBSet
 {
-    class FakeBreweryDbSet : FakeDbSet<Brewery>
+    class FakeBreweryDbSet : FakeDbSetBase<Brewery>
     {
         public override Brewery Find(params object[] keyValues)
         {

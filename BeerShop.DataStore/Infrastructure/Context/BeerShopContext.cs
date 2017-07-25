@@ -5,7 +5,7 @@ namespace BeerShop.DataStore.Infrastructure.Context
 {
     public class BeerShopContext : DbContext, IBeerShopContext
     {
-        public BeerShopContext(): base("")
+        public BeerShopContext(): base()
         {}
 
         public IDbSet<Brewery> Breweries { get; set; }
@@ -14,7 +14,7 @@ namespace BeerShop.DataStore.Infrastructure.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Beer>()
-                .HasMany<Brewery>(b => b.Breweries)
+                .HasMany(b => b.Breweries)
                 .WithMany(br => br.Beers)
                 .Map(cs =>
                 {

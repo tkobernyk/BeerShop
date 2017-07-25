@@ -65,12 +65,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DIController\Unity.cs" />
-    <Compile Include="Stubs\FakeBeerDbSet.cs" />
-    <Compile Include="Stubs\FakeBeerShopContext.cs" />
-    <Compile Include="Stubs\FakeBreweryDbSet.cs" />
-    <Compile Include="Stubs\FakeDbSet.cs" />
+    <Compile Include="Stubs\Infrastructure\Database\DBSet\FakeBeerDbSet.cs" />
+    <Compile Include="Stubs\Infrastructure\Database\FakeBeerShopContext.cs" />
+    <Compile Include="Stubs\Infrastructure\Database\DBSet\FakeBreweryDbSet.cs" />
+    <Compile Include="Stubs\Infrastructure\Database\DBSet\FakeDbSetBase.cs" />
     <Compile Include="BreweryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BeerTest.cs" />
+    <Compile Include="Stubs\Infrastructure\Repository\FakeBeerRepository.cs" />
+    <Compile Include="Stubs\Infrastructure\Repository\FakeBreweryRepository.cs" />
+    <Compile Include="Stubs\Infrastructure\Repository\FakeRepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BeerShop.Api\BeerShop.Api.csproj">

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Data.Entity;
+using System.Collections.ObjectModel;
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Infrastructure.Context;
-using System.Collections.ObjectModel;
+using BeerShop.Api.Tests.Stubs.Infrastructure.Database.DBSet;
 
-namespace BeerShop.Api.Tests.Stubs
+
+namespace BeerShop.Api.Tests.Stubs.Infrastructure.Database
 {
     class FakeBeerShopContext : IBeerShopContext
     {
@@ -43,13 +45,14 @@ namespace BeerShop.Api.Tests.Stubs
                     Beers = new Collection<Beer>()
                 }
             };
-           Beers = new FakeBeerDbSet{
+            Beers = new FakeBeerDbSet{
                 new Beer
                 {
                     Id = 1,
                     Name = "Beer1",
                     Volume = 0.5M,
                     Country = "Ukraine",
+                    Price = 15.0M,
                     Breweries = new Collection<Brewery> { Breweries.Find(1) }
                 },
                 new Beer
@@ -58,6 +61,7 @@ namespace BeerShop.Api.Tests.Stubs
                     Name = "Beer2",
                     Volume = 0.5M,
                     Country = "Ukraine",
+                    Price = 25.0M,
                     Breweries = new Collection<Brewery> { Breweries.Find(2) }
                 },
                 new Beer
@@ -66,6 +70,7 @@ namespace BeerShop.Api.Tests.Stubs
                     Name = "Beer3",
                     Volume = 0.33M,
                     Country = "Ukraine",
+                    Price = 20.50M,
                     Breweries = new Collection<Brewery> { Breweries.Find(1), Breweries.Find(2) }
                 }
             };

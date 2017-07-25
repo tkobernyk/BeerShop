@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Infrastructure.Context;
 
 namespace BeerShop.DataStore.Infrastructure.Repository
 {
-    public class BeerRepository : IRepository<Beer>
+    public class BeerRepository : RepositoryBase, IRepository<Beer>
     {
-        private readonly IBeerShopContext _dbContext;
-
-        public BeerRepository(IBeerShopContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public BeerRepository(IBeerShopContext dbContext) : base(dbContext) {}
         public Beer Add(Beer entity)
         {
             throw new NotImplementedException();
@@ -27,11 +21,6 @@ namespace BeerShop.DataStore.Infrastructure.Repository
         public Beer Delete(Beer entity)
         {
             throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            _dbContext.Dispose();
         }
 
         public IEnumerable<Beer> GetAll()

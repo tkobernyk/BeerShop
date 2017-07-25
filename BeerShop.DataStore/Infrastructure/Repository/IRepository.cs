@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BeerShop.DataStore.Infrastructure.Repository
 {
-    public interface IRepository<T> : IDisposable where T : IEntity
+    public interface IRepository<T> where T : IEntity
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
@@ -12,5 +12,7 @@ namespace BeerShop.DataStore.Infrastructure.Repository
         T Update(int id, T entity);
         T Add(T entity);
         T Delete(T entity);
+
+        void Dispose();
     }
 }

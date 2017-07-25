@@ -1,18 +1,17 @@
-﻿using BeerShop.DataStore.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 
-namespace BeerShop.Api.Tests.Stubs
+namespace BeerShop.Api.Tests.Stubs.Infrastructure.Database.DBSet
 {
-    class FakeDbSet<T> : IDbSet<T> where T : class
+    abstract class FakeDbSetBase<T> : IDbSet<T> where T : class
     {
         ObservableCollection<T> _data;
         IQueryable _query;
 
-        public FakeDbSet()
+        public FakeDbSetBase()
         {
             _data = new ObservableCollection<T>();
             _query = _data.AsQueryable();

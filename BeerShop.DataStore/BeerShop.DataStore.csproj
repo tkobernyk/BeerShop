@@ -49,10 +49,10 @@
   <ItemGroup>
     <Compile Include="Infrastructure\Context\BeerShopContext.cs" />
     <Compile Include="Infrastructure\Context\IBeerShopContext.cs" />
-    <Compile Include="Infrastructure\Exception\EntityNotFoundException.cs" />
     <Compile Include="Infrastructure\Repository\BeerRepository.cs" />
     <Compile Include="Infrastructure\Repository\BreweryRepository.cs" />
     <Compile Include="Infrastructure\Repository\IRepository.cs" />
+    <Compile Include="Infrastructure\Repository\RepositoryBase.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Brewery.cs" />
     <Compile Include="Models\Interfaces\IEntity.cs" />
