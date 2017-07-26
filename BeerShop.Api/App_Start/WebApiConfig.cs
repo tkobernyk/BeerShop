@@ -13,12 +13,6 @@ namespace BeerShop.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            config.Routes.MapHttpRoute(
-                name: "ApiWithAction",
-                routeTemplate: "api/{controller}/{action}/{name}",
-                defaults: null,
-                constraints: new { name = @"^[a-z]+$" }
-             );
         }
     }
 }

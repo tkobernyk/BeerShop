@@ -16,13 +16,13 @@ namespace BeerShop.Api.Tests
     [TestClass]
     public class BeerTest
     {
-        private readonly IRepository<Beer> _repository;
+        private readonly Repository<Beer> _repository;
         private readonly BeersController _controller;
 
-        public BeerTest() : this(Unity.Register().Resolve<IRepository<Beer>>())
+        public BeerTest() : this(Unity.Register().Resolve<Repository<Beer>>())
         { }
 
-        public BeerTest(IRepository<Beer> repository)
+        public BeerTest(Repository<Beer> repository)
         {
             _repository = repository;
             _controller = new BeersController(_repository);

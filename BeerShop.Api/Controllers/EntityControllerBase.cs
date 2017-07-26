@@ -11,9 +11,9 @@ namespace BeerShop.Api.Controllers
 {
     public abstract class EntityControllerBase<T> : ApiController where T : IEntity
     {
-        protected readonly IRepository<T> _repository;
+        protected readonly Repository<T> _repository;
 
-        protected EntityControllerBase(IRepository<T> repository)
+        protected EntityControllerBase(Repository<T> repository)
         {
             _repository = repository;
         }
@@ -25,7 +25,7 @@ namespace BeerShop.Api.Controllers
 
         protected virtual IEnumerable<T> GetEntities(int pageIndex, int pageSize)
         {
-            return _repository.GetAll().Skip((pageIndex-1) * pageSize).Take(pageSize);
+            return _repository.GetEntities(pageIndex, pageSize);
         }
 
         protected virtual IHttpActionResult GetById(int id)

@@ -74,7 +74,6 @@
     <Compile Include="BeerTest.cs" />
     <Compile Include="Stubs\Infrastructure\Repository\FakeBeerRepository.cs" />
     <Compile Include="Stubs\Infrastructure\Repository\FakeBreweryRepository.cs" />
-    <Compile Include="Stubs\Infrastructure\Repository\FakeRepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BeerShop.Api\BeerShop.Api.csproj">

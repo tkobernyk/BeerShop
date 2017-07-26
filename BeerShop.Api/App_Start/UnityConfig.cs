@@ -14,8 +14,8 @@ namespace BeerShop.Api
         {
 			var container = new UnityContainer();
             container.RegisterType<IBeerShopContext, BeerShopContext>();
-            container.RegisterType<IRepository<Beer>, BeerRepository>();
-            container.RegisterType<IRepository<Brewery>, BreweryRepository>();
+            container.RegisterType<Repository<Beer>, BeerRepository>();
+            container.RegisterType<Repository<Brewery>, BreweryRepository>();
             config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

@@ -14,8 +14,8 @@ namespace BeerShop.Api.Tests.DIController
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IBeerShopContext, FakeBeerShopContext>();
-            container.RegisterType<IRepository<Beer>, FakeBeerRepository>();
-            container.RegisterType<IRepository<Brewery>, FakeBreweryRepository>();
+            container.RegisterType<Repository<Beer>, FakeBeerRepository>();
+            container.RegisterType<Repository<Brewery>, FakeBreweryRepository>();
             return container;
         }
     }

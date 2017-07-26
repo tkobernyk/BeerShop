@@ -10,7 +10,7 @@ namespace BeerShop.Api.Controllers
 {
     public class BeersController : EntityControllerBase<Beer>
     {
-        public BeersController(IRepository<Beer> repository) : base(repository) {}
+        public BeersController(Repository<Beer> repository) : base(repository) {}
 
         // GET: api/Beers
         public IEnumerable<Beer> GetBeers()

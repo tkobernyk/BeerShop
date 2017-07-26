@@ -7,31 +7,36 @@ using BeerShop.DataStore.Infrastructure.Repository;
 
 namespace BeerShop.Api.Tests.Stubs.Infrastructure.Repository
 {
-    class FakeBreweryRepository : FakeRepositoryBase, IRepository<Brewery>
+    class FakeBreweryRepository : Repository<Brewery>
     {
         public FakeBreweryRepository(IBeerShopContext dbContext) : base (dbContext) { }
-        public IEnumerable<Brewery> GetAll()
+        public override IEnumerable<Brewery> GetAll()
         {
             return _dbContext.Breweries;
         }
 
-        public Brewery GetById(int id)
+        public override IEnumerable<Brewery> GetEntities(int pageIndex, int pageSize)
+        {
+            return _dbContext.Breweries.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+        }
+
+        public override Brewery GetById(int id)
         {
             return _dbContext.Breweries.Find(id);
         }
 
-        public IEnumerable<Brewery> GetByName(string name)
+        public override IEnumerable<Brewery> GetByName(string name)
         {
             return _dbContext.Breweries.Where(br => br.Name == name);
         }
-        public Brewery Add(Brewery entity)
+        public override Brewery Add(Brewery entity)
         {
             int maxId = _dbContext.Breweries.Max(br => br.Id);
             entity.Id = maxId + 1;
             _dbContext.Breweries.Add(entity);
             return entity;
         }
-        public Brewery Update(int id, Brewery entity)
+        public override Brewery Update(int id, Brewery entity)
         {
             var oldentity = _dbContext.Breweries.Find(id);
             if (oldentity == null)
@@ -40,7 +45,7 @@ namespace BeerShop.Api.Tests.Stubs.Infrastructure.Repository
             _dbContext.Breweries.Add(entity);
             return entity;
         }
-        public Brewery Delete(Brewery entity)
+        public override Brewery Delete(Brewery entity)
         {
             return _dbContext.Breweries.Remove(entity);
         }
