@@ -137,5 +137,21 @@ namespace BeerShop.Api.Tests
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
+
+        [TestMethod]
+        public void GetBreweriesWithPagingTest()
+        {
+            var breweries = _controller.GetBreweries(1, 2);
+            Assert.IsNotNull(breweries);
+            Assert.AreEqual(breweries.Count(), 2);
+        }
+
+        [TestMethod]
+        public void FaliedGetBeersWithPagingTest()
+        {
+            var breweries = _controller.GetBreweries(10, 10);
+            Assert.IsNotNull(breweries);
+            Assert.AreEqual(breweries.Count(), 0);
+        }
     }
 }

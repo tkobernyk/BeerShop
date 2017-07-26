@@ -16,6 +16,12 @@ namespace BeerShop.Api.Controllers
             return GetAll();
         }
 
+        // GET: api/Beers?pageIndex=1&pageSize=1
+        public IEnumerable<Brewery> GetBreweries(int pageIndex, int pageSize)
+        {
+            return GetEntities(pageIndex, pageSize);
+        }
+
         // GET: api/Breweries/5
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult GetBrewery(int id)

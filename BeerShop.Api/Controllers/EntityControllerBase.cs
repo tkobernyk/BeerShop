@@ -22,6 +22,12 @@ namespace BeerShop.Api.Controllers
         {
             return _repository.GetAll();
         }
+
+        protected virtual IEnumerable<T> GetEntities(int pageIndex, int pageSize)
+        {
+            return _repository.GetAll().Skip((pageIndex-1) * pageSize).Take(pageSize);
+        }
+
         protected virtual IHttpActionResult GetById(int id)
         {
             T entity = _repository.GetById(id);

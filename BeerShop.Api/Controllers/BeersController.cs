@@ -4,7 +4,7 @@ using System.Web.Http.Description;
 
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Infrastructure.Repository;
-
+using System.Linq;
 
 namespace BeerShop.Api.Controllers
 {
@@ -17,6 +17,11 @@ namespace BeerShop.Api.Controllers
         {
             return GetAll();
         }
+        // GET: api/Beers?pageIndex=1&pageSize=1
+        public IEnumerable<Beer> GetBeers(int pageIndex, int pageSize)
+        {
+            return GetEntities(pageIndex, pageSize);
+        }
 
         // GET: api/Beers/5
         [ResponseType(typeof(Beer))]
@@ -25,7 +30,7 @@ namespace BeerShop.Api.Controllers
             return GetById(id);
         }
 
-        // GET: api/Beers/5
+        // GET: api/Beers/GetBeersByName/Beer1
         [ResponseType(typeof(IEnumerable<Beer>))]
         public IHttpActionResult GetBeersByName(string name)
         {
