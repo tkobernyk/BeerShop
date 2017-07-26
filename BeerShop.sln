@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerShop.DataStore", "BeerS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C3E1CCD2-3DCA-4004-98E9-09D5545FC037}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerShop.Logging", "BeerShop.Logging\BeerShop.Logging.csproj", "{10C83AC6-FA0B-418A-A2DB-AC2EB01526A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{3F21386E-1570-4091-9620-E3537CD8776D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F21386E-1570-4091-9620-E3537CD8776D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F21386E-1570-4091-9620-E3537CD8776D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10C83AC6-FA0B-418A-A2DB-AC2EB01526A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10C83AC6-FA0B-418A-A2DB-AC2EB01526A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10C83AC6-FA0B-418A-A2DB-AC2EB01526A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10C83AC6-FA0B-418A-A2DB-AC2EB01526A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

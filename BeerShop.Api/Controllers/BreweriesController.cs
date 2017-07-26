@@ -7,27 +7,27 @@ using BeerShop.DataStore.Infrastructure.Repository;
 
 namespace BeerShop.Api.Controllers
 {
-    [Route("api/breweries")]
+    [RoutePrefix("api/breweries")]
     public class BreweriesController : EntityControllerBase<Brewery>
     {
         public BreweriesController(Repository<Brewery> repository) : base(repository) {}
 
         [AcceptVerbs("GET", "HEAD")]
-        [Route("breweries")]
+        [Route("")]
         public IEnumerable<Brewery> GetBreweries()
         {
             return GetAll();
         }
 
         [HttpGet]
-        [Route("breweries/{pageIndex:int}/{pageSize:int}")]
+        [Route("{pageIndex:int}/{pageSize:int}")]
         public IEnumerable<Brewery> GetBreweries([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             return GetEntities(pageIndex, pageSize);
         }
 
         [HttpGet]
-        [Route("breweries/{id:int}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult GetBrewery([FromUri]int id)
         {
@@ -35,14 +35,14 @@ namespace BeerShop.Api.Controllers
         }
 
         [HttpGet]
-        [Route("breweries/{name}")]
+        [Route("{name}")]
         [ResponseType(typeof(IEnumerable<Brewery>))]
         public IHttpActionResult GetBreweriesByName([FromUri]string name)
         {
             return GetByName(name);
         }
 
-        [Route("breweries/{id:int}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrewery([FromUri]int id, [FromBody]Brewery brewery)
         {
@@ -51,7 +51,7 @@ namespace BeerShop.Api.Controllers
 
  
         [HttpPost]
-        [Route("breweries")]
+        [Route("")]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult PostBrewery([FromBody]Brewery brewery)
         {
@@ -59,7 +59,7 @@ namespace BeerShop.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("breweries/{id:int}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult DeleteBrewery([FromUri]int id)
         {

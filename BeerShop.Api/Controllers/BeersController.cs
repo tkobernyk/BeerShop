@@ -7,34 +7,34 @@ using BeerShop.DataStore.Infrastructure.Repository;
 
 namespace BeerShop.Api.Controllers
 {
-    [Route("api/beers")]
+    [RoutePrefix("api/beers")]
     public class BeersController : EntityControllerBase<Beer>
     {
         public BeersController(Repository<Beer> repository) : base(repository) {}
 
         [AcceptVerbs("GET", "HEAD")]
-        [Route("beers")]
+        [Route("")]
         public IEnumerable<Beer> GetBeers()
         {
             return GetAll();
         }
 
         [HttpGet]
-        [Route("beers/{pageIndex:int}/{pageSize:int}")]
+        [Route("{pageIndex:int}/{pageSize:int}")]
         public IEnumerable<Beer> GetBeers([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             return GetEntities(pageIndex, pageSize);
         }
 
         [HttpGet]
-        [Route("beers/{id:int}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Beer))]
         public IHttpActionResult GetBeer([FromUri]int id)
         {
             return GetById(id);
         }
         [HttpGet]
-        [Route("beers/{name}")]
+        [Route("{name}")]
         [ResponseType(typeof(IEnumerable<Beer>))]
         public IHttpActionResult GetBeersByName([FromUri]string name)
         {
@@ -42,7 +42,7 @@ namespace BeerShop.Api.Controllers
         }
 
         [HttpPut]
-        [Route("beers/{id:int}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBeer([FromUri]int id, [FromBody]Beer beer)
         {
@@ -51,7 +51,7 @@ namespace BeerShop.Api.Controllers
 
 
         [HttpPost]
-        [Route("beers")]
+        [Route("")]
         [ResponseType(typeof(Beer))]
         public IHttpActionResult PostBeer([FromBody]Beer beer)
         {
@@ -59,7 +59,7 @@ namespace BeerShop.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("beers/{id:int}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Beer))]
         public IHttpActionResult DeleteBeer([FromUri]int id)
         {

@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Config\log4net.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -155,6 +156,10 @@
     <ProjectReference Include="..\BeerShop.DataStore\BeerShop.DataStore.csproj">
       <Project>{3f21386e-1570-4091-9620-e3537cd8776d}</Project>
       <Name>BeerShop.DataStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeerShop.Logging\BeerShop.Logging.csproj">
+      <Project>{10c83ac6-fa0b-418a-a2db-ac2eb01526a7}</Project>
+      <Name>BeerShop.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
