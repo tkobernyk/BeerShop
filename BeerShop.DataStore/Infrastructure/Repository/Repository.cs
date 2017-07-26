@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BeerShop.DataStore.Infrastructure.Repository
 {
-    public class Repository<T> : IDisposable where T : IEntity 
+    public abstract class Repository<T> : IDisposable where T : IEntity 
     {
         protected readonly IBeerShopContext _dbContext;
 
