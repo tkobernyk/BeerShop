@@ -18,7 +18,7 @@ namespace BeerShop.Api.Controllers
         }
 
         // GET: api/Beers?pageIndex=1&pageSize=1
-        public IEnumerable<Brewery> GetBreweries(int pageIndex, int pageSize)
+        public IEnumerable<Brewery> GetBreweries([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             return GetEntities(pageIndex, pageSize);
         }
@@ -30,7 +30,7 @@ namespace BeerShop.Api.Controllers
             return GetById(id);
         }
 
-        // GET: api/Breweries/Brewery1
+        // GET: api/Breweries?name=Brewery1
         [ResponseType(typeof(IEnumerable<Brewery>))]
         public IHttpActionResult GetBreweriesByName(string name)
         {
