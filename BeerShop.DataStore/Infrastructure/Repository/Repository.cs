@@ -1,7 +1,7 @@
 ﻿using System;
-using BeerShop.DataStore.Infrastructure.Context;
-using BeerShop.DataStore.Models.Interfaces;
 using System.Collections.Generic;
+using BeerShop.DataStore.Models.Interfaces;
+using BeerShop.DataStore.Infrastructure.Context;
 
 namespace BeerShop.DataStore.Infrastructure.Repository
 {

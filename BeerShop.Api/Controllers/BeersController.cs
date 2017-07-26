@@ -4,7 +4,6 @@ using System.Web.Http.Description;
 
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Infrastructure.Repository;
-using System.Linq;
 
 namespace BeerShop.Api.Controllers
 {

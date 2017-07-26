@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Linq;
 
 namespace BeerShop.Api.Tests.Stubs.Infrastructure.Database.DBSet
 {

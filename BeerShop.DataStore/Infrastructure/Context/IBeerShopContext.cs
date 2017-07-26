@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using BeerShop.DataStore.Models;
-using System.Data.Entity.Infrastructure;
 
 namespace BeerShop.DataStore.Infrastructure.Context
 {
