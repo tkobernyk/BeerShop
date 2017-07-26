@@ -7,53 +7,61 @@ using BeerShop.DataStore.Infrastructure.Repository;
 
 namespace BeerShop.Api.Controllers
 {
+    [Route("api/breweries")]
     public class BreweriesController : EntityControllerBase<Brewery>
     {
         public BreweriesController(Repository<Brewery> repository) : base(repository) {}
 
-        // GET: api/Breweries
+        [AcceptVerbs("GET", "HEAD")]
+        [Route("breweries")]
         public IEnumerable<Brewery> GetBreweries()
         {
             return GetAll();
         }
 
-        // GET: api/Beers?pageIndex=1&pageSize=1
+        [HttpGet]
+        [Route("breweries/{pageIndex:int}/{pageSize:int}")]
         public IEnumerable<Brewery> GetBreweries([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             return GetEntities(pageIndex, pageSize);
         }
 
-        // GET: api/Breweries/5
+        [HttpGet]
+        [Route("breweries/{id:int}")]
         [ResponseType(typeof(Brewery))]
-        public IHttpActionResult GetBrewery(int id)
+        public IHttpActionResult GetBrewery([FromUri]int id)
         {
             return GetById(id);
         }
 
-        // GET: api/Breweries?name=Brewery1
+        [HttpGet]
+        [Route("breweries/{name}")]
         [ResponseType(typeof(IEnumerable<Brewery>))]
-        public IHttpActionResult GetBreweriesByName(string name)
+        public IHttpActionResult GetBreweriesByName([FromUri]string name)
         {
             return GetByName(name);
         }
 
-        // PUT: api/Breweries/5
+        [Route("breweries/{id:int}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBrewery(int id, Brewery brewery)
+        public IHttpActionResult PutBrewery([FromUri]int id, [FromBody]Brewery brewery)
         {
             return Put(id, brewery);
         }
 
-        // POST: api/Breweries
+ 
+        [HttpPost]
+        [Route("breweries")]
         [ResponseType(typeof(Brewery))]
-        public IHttpActionResult PostBrewery(Brewery brewery)
+        public IHttpActionResult PostBrewery([FromBody]Brewery brewery)
         {
             return Post(brewery);
         }
 
-        // DELETE: api/Breweries/5
+        [HttpDelete]
+        [Route("breweries/{id:int}")]
         [ResponseType(typeof(Brewery))]
-        public IHttpActionResult DeleteBrewery(int id)
+        public IHttpActionResult DeleteBrewery([FromUri]int id)
         {
             return Delete(id);
         }

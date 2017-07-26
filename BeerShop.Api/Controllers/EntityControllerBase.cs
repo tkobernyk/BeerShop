@@ -59,7 +59,6 @@ namespace BeerShop.Api.Controllers
             {
                 return BadRequest();
             }
-            //db.Entry(beer).State = EntityState.Modified;
             try
             {
                 _repository.Update(id, entity);
@@ -72,7 +71,7 @@ namespace BeerShop.Api.Controllers
                 }
                 else
                 {
-                    throw;
+                    return StatusCode(HttpStatusCode.NotModified);
                 }
             }
 
