@@ -6,10 +6,10 @@ using BeerShop.Logging;
 
 namespace BeerShop.Api.ActionFilters
 {
-    public class LoggingFilterAttribute : ActionFilterAttribute
+    public class LoggingAttribute : ActionFilterAttribute
     {
         private readonly ILogger _log;
-        public LoggingFilterAttribute(ILogger logger)
+        public LoggingAttribute(ILogger logger)
         {
             _log = logger;
         }

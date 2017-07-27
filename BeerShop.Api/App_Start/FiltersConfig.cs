@@ -9,7 +9,8 @@ namespace BeerShop.Api
         public static void Register(HttpConfiguration config)
         {
             var logger = config.DependencyResolver.GetService(typeof(ILogger)) as ILogger;
-            config.Filters.Add(new LoggingFilterAttribute(logger));
+            config.Filters.Add(new LoggingAttribute(logger));
+            config.Filters.Add(new ValidateAttribute());
         }
     }
 }
