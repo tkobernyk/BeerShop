@@ -12,7 +12,8 @@ namespace BeerShop.Api.Controllers
     {
         public BeersController(Repository<Beer> repository) : base(repository) {}
 
-        [AcceptVerbs("GET", "HEAD")]
+        [HttpGet]
+        [HttpHead]
         [Route("")]
         public IEnumerable<Beer> GetBeers()
         {
