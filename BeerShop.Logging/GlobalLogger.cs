@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using BeerShop.Logging;
 
 namespace BeerShop.Logging
 {
