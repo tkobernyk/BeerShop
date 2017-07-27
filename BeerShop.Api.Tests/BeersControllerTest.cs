@@ -29,7 +29,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
-        public void GetBeersTest()
+        public void GetBeers()
         {
             var beers = _controller.GetBeers();
             Assert.IsNotNull(beers);
@@ -156,7 +156,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
-        public void GetBeersWithPagingTest()
+        public void GetBeersWithPaging()
         {
             var beers = _controller.GetBeers(1,2);
             Assert.IsNotNull(beers);
@@ -164,7 +164,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
-        public void FaliedGetBeersWithPagingTest()
+        public void FaliedGetBeersWithPaging()
         {
             var beers = _controller.GetBeers(10, 10);
             Assert.IsNotNull(beers);

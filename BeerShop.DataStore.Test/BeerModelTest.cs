@@ -1,5 +1,6 @@
-﻿using BeerShop.DataStore.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using BeerShop.DataStore.Models;
 
 namespace BeerShop.DataStore.Test
 {
