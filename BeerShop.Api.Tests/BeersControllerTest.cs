@@ -29,6 +29,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData")]
         public void GetBeers()
         {
             var beers = _controller.GetBeers();
@@ -37,6 +38,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData")]
         public void GetBeerById()
         {
             var id = 1;
@@ -48,6 +50,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData.Validation")]
         public void FaliedGetResultById()
         {
             var id = 10;
@@ -57,6 +60,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData")]
         public void GetBeerByName()
         {
             var name = "Beer1";
@@ -72,6 +76,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData.Validation")]
         public void FaliedGetResultByName()
         {
             var name = "test";
@@ -81,6 +86,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.ModifyData")]
         public void UpdateBeer()
         {
             var id = 2;
@@ -92,6 +98,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.ModifyData.Validation")]
         public void FailedUpdateBeer()
         {
             var beer = new Beer
@@ -105,6 +112,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.ModifyData.Validation")]
         public void FailedUpdateBeerWithInValidModel()
         {
             var beer = new Beer
@@ -119,6 +127,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.ModifyData")]
         public void AddBeer()
         {
             var beer = new Beer
@@ -136,6 +145,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.ModifyData")]
         public void DeleteBeer()
         {
             int id = 1;
@@ -146,6 +156,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.ModifyData.Validation")]
         public void FaliedDeleteBeer()
         {
             int id = 10;
@@ -156,6 +167,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData")]
         public void GetBeersWithPaging()
         {
             var beers = _controller.GetBeers(1,2);
@@ -164,6 +176,7 @@ namespace BeerShop.Api.Tests
         }
 
         [TestMethod]
+        [TestCategory("Api.GetData.Validation")]
         public void FaliedGetBeersWithPaging()
         {
             var beers = _controller.GetBeers(10, 10);

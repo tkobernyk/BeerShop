@@ -9,6 +9,7 @@ namespace BeerShop.DataStore.Test
     {
         public BreweryModelTest() { }
         [TestMethod]
+        [TestCategory("DataStore.Models.Validation")]
         public void BreweryNameRequired()
         {
             var brewery = new Brewery { Id = 1 };
@@ -16,6 +17,7 @@ namespace BeerShop.DataStore.Test
         }
 
         [TestMethod]
+        [TestCategory("DataStore.Models.Validation")]
         public void BreweryNameMaxLengthRequired()
         {
             var beer = new Brewery { Id = 1, Name = "123456789012345678901" };
