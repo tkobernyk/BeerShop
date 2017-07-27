@@ -11,6 +11,7 @@ namespace BeerShop.DataStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
+        [MaxLength(20)]
         public string Name { get; set; }
 
         public ICollection<Beer> Beers { get; set; }

@@ -69,9 +69,9 @@
     <Compile Include="Stubs\Infrastructure\Database\FakeBeerShopContext.cs" />
     <Compile Include="Stubs\Infrastructure\Database\DBSet\FakeBreweryDbSet.cs" />
     <Compile Include="Stubs\Infrastructure\Database\DBSet\FakeDbSetBase.cs" />
-    <Compile Include="BreweryTests.cs" />
+    <Compile Include="BreweriesControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BeerTest.cs" />
+    <Compile Include="BeersControllerTest.cs" />
     <Compile Include="Stubs\Infrastructure\Repository\FakeBeerRepository.cs" />
     <Compile Include="Stubs\Infrastructure\Repository\FakeBreweryRepository.cs" />
   </ItemGroup>

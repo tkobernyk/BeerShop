@@ -50,27 +50,27 @@ namespace BeerShop.Api.Tests.Stubs.Infrastructure.Database
                 {
                     Id = 1,
                     Name = "Beer1",
-                    Volume = 0.5M,
+                    Volume = 0.5,
                     Country = "Ukraine",
-                    Price = 15.0M,
+                    Price = 15.0,
                     Breweries = new Collection<Brewery> { Breweries.Find(1) }
                 },
                 new Beer
                 {
                     Id = 2,
                     Name = "Beer2",
-                    Volume = 0.5M,
+                    Volume = 0.5,
                     Country = "Ukraine",
-                    Price = 25.0M,
+                    Price = 25.0,
                     Breweries = new Collection<Brewery> { Breweries.Find(2) }
                 },
                 new Beer
                 {
                     Id = 3,
                     Name = "Beer3",
-                    Volume = 0.33M,
+                    Volume = 0.33,
                     Country = "Ukraine",
-                    Price = 20.50M,
+                    Price = 20.50,
                     Breweries = new Collection<Brewery> { Breweries.Find(1), Breweries.Find(2) }
                 }
             };

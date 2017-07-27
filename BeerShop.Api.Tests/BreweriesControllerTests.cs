@@ -14,15 +14,15 @@ using BeerShop.DataStore.Infrastructure.Repository;
 namespace BeerShop.Api.Tests
 {
     [TestClass]
-    public class BreweryTests
+    public class BreweriesControllerTests
     {
         private readonly Repository<Brewery> _repository;
         private readonly BreweriesController _controller;
 
-        public BreweryTests() : this(Unity.Register().Resolve<Repository<Brewery>>())
+        public BreweriesControllerTests() : this(Unity.Register().Resolve<Repository<Brewery>>())
         {}
 
-        public BreweryTests(Repository<Brewery> repository)
+        public BreweriesControllerTests(Repository<Brewery> repository)
         {
             _repository = repository;
             _controller = new BreweriesController(_repository);
@@ -102,6 +102,20 @@ namespace BeerShop.Api.Tests
             var result = _controller.PutBrewery(brewery.Id, brewery);
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
+
+        [TestMethod]
+        public void FailedUpdateBreweryWithInValidModel()
+        {
+            var brewery = new Brewery
+            {
+                Id = 0,
+                Name = "Test0"
+            };
+            _controller.ModelState.AddModelError("test", "test");
+            var result = _controller.PutBrewery(brewery.Id, brewery);
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(InvalidModelStateResult));
         }
 
         [TestMethod]

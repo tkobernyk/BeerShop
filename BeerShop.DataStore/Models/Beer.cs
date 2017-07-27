@@ -11,11 +11,14 @@ namespace BeerShop.DataStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
+        [MaxLength(20)]
         public string Name { get; set; }
-        [Required]
-        public decimal Volume { get; set; }
+        [Range(0.1, double.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        public double Volume { get; set; }
+        [MaxLength(20)]
         public string Country { get; set; }
-        public decimal Price { get; set; }
+        [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        public double Price { get; set; }
         public ICollection<Brewery> Breweries { get; set; }
     }
 }
