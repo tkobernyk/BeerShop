@@ -21,6 +21,7 @@ namespace BeerShop.Api.Controllers
 
         [HttpGet]
         [Route("{pageIndex:int}/{pageSize:int}")]
+        [Route("pageIndex/{pageIndex:int}/pageSize/{pageSize:int}")]
         public IEnumerable<Beer> GetBeers([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             return GetEntities(pageIndex, pageSize);
@@ -28,6 +29,7 @@ namespace BeerShop.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [Route("id/{id:int}")]
         [ResponseType(typeof(Beer))]
         public IHttpActionResult GetBeer([FromUri]int id)
         {
@@ -35,6 +37,7 @@ namespace BeerShop.Api.Controllers
         }
         [HttpGet]
         [Route("{name}")]
+        [Route("name/{name}")]
         [ResponseType(typeof(IEnumerable<Beer>))]
         public IHttpActionResult GetBeersByName([FromUri]string name)
         {

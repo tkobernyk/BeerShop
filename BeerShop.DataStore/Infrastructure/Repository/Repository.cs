@@ -19,8 +19,9 @@ namespace BeerShop.DataStore.Infrastructure.Repository
         }
         public virtual IEnumerable<T> GetAll()
         {
-            _log.Error("Not Implemented", new NotImplementedException());
-            throw new NotImplementedException();
+            _log.Info("Not Implemented", new NotImplementedException());
+            //throw new NotImplementedException();
+            return new List<T>();
         }
         public virtual IEnumerable<T> GetEntities(int pageIndex, int pageSize)
         {
