@@ -1,40 +1,39 @@
 ﻿using System;
 using log4net;
-using log4net.Core;
 using System.Reflection;
 
 namespace BeerShop.Logging
 {
-    internal class Logger : ILogger
+    internal class Log4netLogger : ILogger
     {
         private readonly ILog _logger;
         
-        public Logger(string name)
+        public Log4netLogger(string name)
         {
             _logger = LogManager.GetLogger(name);
         }
 
-        public Logger(Type type)
+        public Log4netLogger(Type type)
         {
             _logger = LogManager.GetLogger(type);
         }
 
-        public Logger(string repository, string name)
+        public Log4netLogger(string repository, string name)
         {
             _logger = LogManager.GetLogger(repository, name);
         }
 
-        public Logger(string repository, Type type)
+        public Log4netLogger(string repository, Type type)
         {
             _logger = LogManager.GetLogger(repository, type);
         }
 
-        public Logger(Assembly assembly, string name)
+        public Log4netLogger(Assembly assembly, string name)
         {
             _logger = LogManager.GetLogger(assembly, name);
         }
 
-        public Logger(Assembly assembly, Type type)
+        public Log4netLogger(Assembly assembly, Type type)
         {
             _logger = LogManager.GetLogger(assembly, type);
         }

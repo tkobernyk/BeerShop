@@ -26,7 +26,7 @@ namespace BeerShop.Api.ActionFilters
                     " 'Action':" + filterContext.ActionContext.ActionDescriptor.ActionName +
                     " 'Arguments':" + string.Join(";", filterContext.ActionContext.ActionArguments.Select(x => x.Key + "=" + x.Value).ToArray()) +
                     "}";
-            _log.Info(" " + logMessage);
+            _log.Info("Executed " + logMessage);
             if (filterContext.Exception != null)
             {
                 _log.Error("Executed with error " + logMessage);
