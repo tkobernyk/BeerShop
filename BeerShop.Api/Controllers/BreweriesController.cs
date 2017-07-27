@@ -45,6 +45,7 @@ namespace BeerShop.Api.Controllers
             return GetByName(name);
         }
 
+        [HttpPut]
         [Route("{id:int}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrewery([FromUri]int id, [FromBody]Brewery brewery)
@@ -52,7 +53,6 @@ namespace BeerShop.Api.Controllers
             return Put(id, brewery);
         }
 
- 
         [HttpPost]
         [Route("")]
         [ResponseType(typeof(Brewery))]
