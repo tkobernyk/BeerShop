@@ -4,10 +4,13 @@ using System.Web.Http.Description;
 
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Infrastructure.Repository;
+using Microsoft.Web.Http;
 
 namespace BeerShop.Api.Controllers
 {
-    [RoutePrefix("api/beers")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [RoutePrefix("api/v{version:apiVersion}/beers")]
     public class BeersController : EntityControllerBase<Beer>
     {
         public BeersController(Repository<Beer> repository) : base(repository) {}

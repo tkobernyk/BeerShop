@@ -10,6 +10,7 @@ namespace BeerShop.Api
         {
             var logger = config.DependencyResolver.GetService(typeof(ILogger)) as ILogger;
             config.Filters.Add(new LoggingAttribute(logger));
+            config.Filters.Add(new ErrorsLoggingAttribute(logger));
             config.Filters.Add(new ValidateAttribute());
         }
     }
