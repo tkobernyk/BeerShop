@@ -1,20 +1,24 @@
 ﻿using System;
-using Owin;
+using BeerShop.Api.OAuth2.Providers;
+using BeerShop.Api.OAuth2.UserManagers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
-using BeerShop.Api.OAuth2.Providers;
+using Owin;
 
-namespace BeerShop.Api.OAuth2.App_Start
+namespace BeerShop.Api.OAuth2
 {
     public class OAuthConfig
     {
+        public static string PublicClientId { get; private set; }
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
-        public void ConfigureAuth(IAppBuilder app)
+        public static void ConfigureAuth(IAppBuilder app)
         {
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
-                Provider = new BeerShopOAuthAuthorizationServerProvider(),
+                Provider = new BeerShopOAuthAuthorizationServerProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 AllowInsecureHttp = true

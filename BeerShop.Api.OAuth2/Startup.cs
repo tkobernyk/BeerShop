@@ -11,6 +11,7 @@ namespace BeerShop.Api.OAuth2
     {
         public void Configuration(IAppBuilder app)
         {
+            OAuthConfig.ConfigureAuth(app);
             app.UseWebApi(WebApiConfig.Register());
         }
     }

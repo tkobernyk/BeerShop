@@ -7,9 +7,11 @@ using BeerShop.Api.OAuth2.Models;
 
 namespace BeerShop.Api.OAuth2.UserManagers
 {
-    public class BeerShopUserStore : IUserStore<ApplicationUser>
+    public class BeerShopUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
     {
-        private static readonly IList<ApplicationUser> _users;
+        private static readonly IList<ApplicationUser> _users = new List<ApplicationUser>();
+        private static readonly IDictionary<ApplicationUser, string> _passwords = new Dictionary<ApplicationUser, string>();
+        
         public Task CreateAsync(ApplicationUser user)
         {
             _users.Add(user);
@@ -23,9 +25,7 @@ namespace BeerShop.Api.OAuth2.UserManagers
         }
 
         public void Dispose()
-        {
-            return;
-        }
+        {}
 
         public Task<ApplicationUser> FindByIdAsync(string userId)
         {
@@ -45,6 +45,22 @@ namespace BeerShop.Api.OAuth2.UserManagers
             _users.Remove(oldUser.Result);
             _users.Add(user);
             return Task.FromResult(user);
+        }
+
+        public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash)
+        {
+            _passwords.Add(user, passwordHash);
+            return Task.FromResult<object>(null);
+        }
+
+        public Task<string> GetPasswordHashAsync(ApplicationUser user)
+        {
+            return Task.FromResult(_passwords[user]);
+        }
+
+        public Task<bool> HasPasswordAsync(ApplicationUser user)
+        {
+            return Task.FromResult(_passwords.ContainsKey(user));
         }
     }
 }

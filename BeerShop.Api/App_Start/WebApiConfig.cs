@@ -15,6 +15,9 @@ namespace BeerShop.Api
                     ["apiVersion"] = typeof( ApiVersionRouteConstraint )
                 }
             };
+
+            //config.SuppressDefaultHostAuthentication();
+
             config.MapHttpAttributeRoutes(constraintResolver);
 
             config.Routes.MapHttpRoute(

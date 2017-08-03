@@ -7,6 +7,7 @@ using BeerShop.DataStore.Infrastructure.Repository;
 
 namespace BeerShop.Api.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/breweries")]
     public class BreweriesController : EntityControllerBase<Brewery>
     {
