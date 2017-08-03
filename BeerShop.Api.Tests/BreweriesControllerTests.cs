@@ -146,10 +146,9 @@ namespace BeerShop.Api.Tests
         public void DeleteBrewery()
         {
             int id = 1;
-            var result = _controller.DeleteBrewery(id) as OkNegotiatedContentResult<Brewery>;
+            var result = _controller.DeleteBrewery(id) as StatusCodeResult;
             Assert.IsNotNull(result);
-            var addedBrewery = result.Content;
-            Assert.IsTrue(_repository.GetById(addedBrewery.Id) == null);
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.NoContent);
         }
 
         [TestMethod]

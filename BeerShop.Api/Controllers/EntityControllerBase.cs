@@ -30,7 +30,7 @@ namespace BeerShop.Api.Controllers
 
         protected virtual IHttpActionResult GetById(int id)
         {
-            T entity = _repository.GetById(id);
+            var entity = _repository.GetById(id);
             if (entity == null)
             {
                 return NotFound();
@@ -97,7 +97,8 @@ namespace BeerShop.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(_repository.Delete(entity));
+            _repository.Delete(entity);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)

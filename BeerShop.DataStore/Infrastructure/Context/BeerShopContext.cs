@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using BeerShop.DataStore.Models;
+using BeerShop.DataStore.Models.v2;
 
 namespace BeerShop.DataStore.Infrastructure.Context
 {
@@ -9,7 +10,7 @@ namespace BeerShop.DataStore.Infrastructure.Context
         {}
 
         public IDbSet<Brewery> Breweries { get; set; }
-        public IDbSet<Beer> Beers { get; set; }
+        public IDbSet<DraftBeer> Beers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

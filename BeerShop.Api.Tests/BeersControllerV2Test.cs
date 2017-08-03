@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using BeerShop.Api.Controllers;
+using BeerShop.Api.Controllers.v2;
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Models.v2;
 using BeerShop.Api.Tests.DIController;
@@ -16,15 +16,15 @@ using BeerShop.DataStore.Infrastructure.Repository;
 namespace BeerShop.Api.Tests
 {
     [TestClass]
-    public class BeersControllerTest
+    public class BeersControllerV2Test
     {
         private readonly Repository<DraftBeer> _repository;
         private readonly BeersController _controller;
 
-        public BeersControllerTest() : this(Unity.Register().Resolve<Repository<DraftBeer>>())
+        public BeersControllerV2Test() : this(Unity.Register().Resolve<Repository<DraftBeer>>())
         { }
 
-        public BeersControllerTest(Repository<DraftBeer> repository)
+        public BeersControllerV2Test(Repository<DraftBeer> repository)
         {
             _repository = repository;
             _controller = new BeersController(_repository);
@@ -32,7 +32,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.GetData")]
-        public void GetBeers()
+        public void GetDraftBeers()
         {
             var beers = _controller.GetBeers();
             Assert.IsNotNull(beers);
@@ -41,19 +41,19 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.GetData")]
-        public void GetBeerById()
+        public void GetDraftBeerById()
         {
             var id = 1;
             var result = _controller.GetBeer(id) as OkNegotiatedContentResult<DraftBeer>;
             Assert.IsNotNull(result);
-            var beer = result.Content as Beer;
+            var beer = result.Content;
             Assert.IsNotNull(beer);
-            Assert.AreEqual(beer, _repository.GetById(id) as Beer);
+            Assert.AreEqual(beer, _repository.GetById(id));
         }
 
         [TestMethod]
         [TestCategory("Api.GetData.Validation")]
-        public void FaliedGetResultById()
+        public void FaliedGetDraftBeerById()
         {
             var id = 10;
             var result = _controller.GetBeer(id);
@@ -63,7 +63,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.GetData")]
-        public void GetBeerByName()
+        public void GetDraftBeerByName()
         {
             var name = "Beer1";
             var testBeers = _repository.GetByName(name);
@@ -79,7 +79,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.GetData.Validation")]
-        public void FaliedGetResultByName()
+        public void FaliedGetDraftBeerByName()
         {
             var name = "test";
             var result = _controller.GetBeersByName(name);
@@ -89,7 +89,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.ModifyData")]
-        public void UpdateBeer()
+        public void UpdateDraftBeer()
         {
             var id = 2;
             var beer = _repository.GetById(id);
@@ -101,9 +101,9 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.ModifyData.Validation")]
-        public void FailedUpdateBeer()
+        public void FailedUpdateDraftBeer()
         {
-            var beer = new Beer
+            var beer = new DraftBeer
             {
                 Id = 0,
                 Name = "Test0"
@@ -115,9 +115,9 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.ModifyData.Validation")]
-        public void FailedUpdateBeerWithInValidModel()
+        public void FailedUpdateDraftBeerWithInValidModel()
         {
-            var beer = new Beer
+            var beer = new DraftBeer
             {
                 Id = 0,
                 Name = "Test0"
@@ -130,9 +130,9 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.ModifyData")]
-        public void AddBeer()
+        public void AddDraftBeer()
         {
-            var beer = new Beer
+            var beer = new DraftBeer
             {
                 Name = "Beer3",
                 Volume = 0.5,
@@ -141,14 +141,14 @@ namespace BeerShop.Api.Tests
             };
             var result = _controller.PostBeer(beer) as CreatedAtRouteNegotiatedContentResult<DraftBeer>;
             Assert.IsNotNull(result);
-            var addedBeer = result.Content as Beer;
+            var addedBeer = result.Content;
             Assert.AreNotEqual(addedBeer.Id, 0);
             Assert.AreEqual(addedBeer.Name, beer.Name);
         }
 
         [TestMethod]
         [TestCategory("Api.ModifyData")]
-        public void DeleteBeer()
+        public void DeleteDraftBeer()
         {
             int id = 1;
             var result = _controller.DeleteBeer(id) as StatusCodeResult;
@@ -158,7 +158,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.ModifyData.Validation")]
-        public void FaliedDeleteBeer()
+        public void FaliedDeleteDraftBeer()
         {
             int id = 10;
             var result = _controller.DeleteBeer(id) as NotFoundResult;
@@ -168,7 +168,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.GetData")]
-        public void GetBeersWithPaging()
+        public void GetDraftBeersWithPaging()
         {
             var beers = _controller.GetBeers(1,2);
             Assert.IsNotNull(beers);
@@ -177,7 +177,7 @@ namespace BeerShop.Api.Tests
 
         [TestMethod]
         [TestCategory("Api.GetData.Validation")]
-        public void FaliedGetBeersWithPaging()
+        public void FaliedGetDraftBeersWithPaging()
         {
             var beers = _controller.GetBeers(10, 10);
             Assert.IsNotNull(beers);

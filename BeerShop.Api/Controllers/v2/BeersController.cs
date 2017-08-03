@@ -1,24 +1,26 @@
 ﻿using System.Web.Http;
 using System.Collections.Generic;
 using System.Web.Http.Description;
-using System.Web.Http.Results;
+
+using Microsoft.Web.Http;
+
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Models.v2;
 using BeerShop.DataStore.Infrastructure.Repository;
-using Microsoft.Web.Http;
 
-namespace BeerShop.Api.Controllers
+
+namespace BeerShop.Api.Controllers.v2
 {
-    [ApiVersion("1.0")]
-    [RoutePrefix("api/beers")]
+    [ApiVersion("2.0")]
+    [RoutePrefix("api/v{version:apiVersion}/beers")]
     public class BeersController : EntityControllerBase<DraftBeer>
     {
-        public BeersController(Repository<DraftBeer> repository) : base(repository) {}
+        public BeersController(Repository<DraftBeer> repository) : base(repository) { }
 
         [HttpGet]
         [HttpHead]
         [Route("")]
-        public IEnumerable<Beer> GetBeers()
+        public IEnumerable<DraftBeer> GetBeers()
         {
             return GetAll();
         }
@@ -34,7 +36,7 @@ namespace BeerShop.Api.Controllers
         [HttpGet]
         [Route("{id:int}")]
         [Route("id/{id:int}")]
-        [ResponseType(typeof(Beer))]
+        [ResponseType(typeof(DraftBeer))]
         public IHttpActionResult GetBeer([FromUri]int id)
         {
             return GetById(id);
@@ -42,7 +44,7 @@ namespace BeerShop.Api.Controllers
         [HttpGet]
         [Route("{name}")]
         [Route("name/{name}")]
-        [ResponseType(typeof(IEnumerable<Beer>))]
+        [ResponseType(typeof(IEnumerable<DraftBeer>))]
         public IHttpActionResult GetBeersByName([FromUri]string name)
         {
             return GetByName(name);
@@ -51,23 +53,23 @@ namespace BeerShop.Api.Controllers
         [HttpPut]
         [Route("{id:int}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBeer([FromUri]int id, [FromBody]Beer beer)
+        public IHttpActionResult PutBeer([FromUri]int id, [FromBody]DraftBeer beer)
         {
-            return Put(id, DraftBeer.FromBeer(beer));
+            return Put(id, beer);
         }
 
 
         [HttpPost]
         [Route("")]
-        [ResponseType(typeof(Beer))]
-        public IHttpActionResult PostBeer([FromBody]Beer beer)
+        [ResponseType(typeof(DraftBeer))]
+        public IHttpActionResult PostBeer([FromBody]DraftBeer beer)
         {
-            return Post(DraftBeer.FromBeer(beer));
+            return Post(beer);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        [ResponseType(typeof(Beer))]
+        [ResponseType(typeof(void))]
         public IHttpActionResult DeleteBeer([FromUri]int id)
         {
             return Delete(id);

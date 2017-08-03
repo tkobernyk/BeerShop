@@ -5,8 +5,11 @@ using Microsoft.Practices.Unity;
 
 using BeerShop.Logging;
 using BeerShop.DataStore.Models;
+using BeerShop.DataStore.Models.v2;
 using BeerShop.DataStore.Infrastructure.Context;
 using BeerShop.DataStore.Infrastructure.Repository;
+using BeerShop.DataStore.Infrastructure.Repository.v2;
+
 
 namespace BeerShop.Api
 {
@@ -18,6 +21,7 @@ namespace BeerShop.Api
             container.RegisterInstance(GlobalLogger.DefaultLogger);
             container.RegisterType<IBeerShopContext, BeerShopContext>();
             container.RegisterType<Repository<Beer>, BeerRepository>();
+            container.RegisterType<Repository<DraftBeer>, DraftBeerRepository>();
             container.RegisterType<Repository<Brewery>, BreweryRepository>();
             config.DependencyResolver = new UnityDependencyResolver(container);
         }

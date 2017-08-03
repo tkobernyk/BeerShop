@@ -8,10 +8,10 @@ namespace BeerShop.Api.Tests.Stubs.Infrastructure.Database.DBSet
 {
     abstract class FakeDbSetBase<T> : IDbSet<T> where T : class
     {
-        ObservableCollection<T> _data;
-        IQueryable _query;
+        private readonly ObservableCollection<T> _data;
+        private readonly IQueryable _query;
 
-        public FakeDbSetBase()
+        protected FakeDbSetBase()
         {
             _data = new ObservableCollection<T>();
             _query = _data.AsQueryable();

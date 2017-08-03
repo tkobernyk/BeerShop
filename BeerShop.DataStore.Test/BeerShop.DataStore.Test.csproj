@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DraftBeerModelTest.cs" />
     <Compile Include="BeerModelTest.cs" />
     <Compile Include="BreweryModelTest.cs" />
     <Compile Include="EntityTest.cs" />

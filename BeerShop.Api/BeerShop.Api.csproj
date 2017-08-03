@@ -123,6 +123,7 @@
     <Compile Include="App_Start\FormattersConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\v2\BeersController.cs" />
     <Compile Include="Controllers\EntityControllerBase.cs" />
     <Compile Include="Controllers\BeersController.cs" />
     <Compile Include="Controllers\BreweriesController.cs" />
