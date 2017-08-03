@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using BeerShop.DataStore.Models;
+using BeerShop.DataStore.Models.v2;
 
 namespace BeerShop.DataStore.Test
 {
@@ -11,7 +11,7 @@ namespace BeerShop.DataStore.Test
         [TestCategory("DataStore.Models.Validation")]
         public void DraftBeerIsDraftNotRequired()
         {
-            var beer = new Beer { Id = 1, Name = "Beer1", Volume = 1, Price = 1 };
+            var beer = new DraftBeer { Id = 1, Name = "Beer1", Volume = 1, Price = 1 };
             Assert.IsTrue(ValidateModel(beer).Count == 0);
         }
     }
