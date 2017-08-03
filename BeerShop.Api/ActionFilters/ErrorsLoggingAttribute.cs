@@ -13,10 +13,10 @@ namespace BeerShop.Api.ActionFilters
         }
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            var logMessage = string.Format("Called {{'Controller': {0} 'Action': {1} 'Arguments': {2} }}", 
-                            actionExecutedContext.ActionContext.ControllerContext.ControllerDescriptor.ControllerName,
-                            actionExecutedContext.ActionContext.ActionDescriptor.ActionName,
-                            actionExecutedContext.ActionContext.ActionArguments.Select(x => x.Key + "=" + x.Value).ToArray());
+            var logMessage = 
+                $"Called {{'Controller': {actionExecutedContext.ActionContext.ControllerContext.ControllerDescriptor.ControllerName} " + 
+                $"'Action': {actionExecutedContext.ActionContext.ActionDescriptor.ActionName} " + 
+                $"'Arguments': {actionExecutedContext.ActionContext.ActionArguments.Select(x => x.Key + "=" + x.Value).ToArray()} }}";
             if (actionExecutedContext.Exception != null)
             {
                 _log.Error("Executed with error " + logMessage);
