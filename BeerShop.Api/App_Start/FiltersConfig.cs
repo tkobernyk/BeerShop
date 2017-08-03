@@ -4,7 +4,7 @@ using BeerShop.Api.ActionFilters;
 
 namespace BeerShop.Api
 {
-    public class FiltersConfig
+    public static class FiltersConfig
     {
         public static void Register(HttpConfiguration config)
         {
@@ -12,6 +12,7 @@ namespace BeerShop.Api
             config.Filters.Add(new LoggingAttribute(logger));
             config.Filters.Add(new ErrorsLoggingAttribute(logger));
             config.Filters.Add(new ValidateAttribute());
+            config.Filters.Add(new WebApiOutputCacheAttribute(120, 60, true));
         }
     }
 }

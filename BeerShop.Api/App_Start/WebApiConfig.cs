@@ -8,8 +8,6 @@ namespace BeerShop.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.MapHttpAttributeRoutes();
-
             var constraintResolver = new DefaultInlineConstraintResolver()
             {
                 ConstraintMap =
@@ -20,9 +18,9 @@ namespace BeerShop.Api
             config.MapHttpAttributeRoutes(constraintResolver);
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/v{version:apiVersion}/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional, version = "1" }
+                "DefaultApi",
+                "api/v{version:apiVersion}/{controller}/{id}",
+                new { id = RouteParameter.Optional, version = "1" }
             );
 
             config.AddApiVersioning(o => o.AssumeDefaultVersionWhenUnspecified = true);

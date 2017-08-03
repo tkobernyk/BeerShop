@@ -2,7 +2,7 @@
 
 namespace BeerShop.Api
 {
-    public class FormattersConfig
+    public static class FormattersConfig
     {
         public static void Register(HttpConfiguration config)
         {

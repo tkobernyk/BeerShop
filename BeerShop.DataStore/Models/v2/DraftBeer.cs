@@ -1,13 +1,11 @@
-﻿namespace BeerShop.DataStore.Models.v2
+﻿using System.ComponentModel;
+
+namespace BeerShop.DataStore.Models.v2
 {
     public class DraftBeer : Beer
     {
+        [DefaultValue(false)]
         public bool IsDraft { get; set; }
-
-        public static Beer ToBeer(DraftBeer draftBeer)
-        {
-            return draftBeer;
-        }
 
         public static DraftBeer FromBeer(Beer beer)
         {
