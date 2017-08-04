@@ -1,22 +1,21 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Owin.Security.Cookies;
-
 using Microsoft.AspNet.Identity.Owin;
-
 using BeerShop.Api.OAuth2.UserManagers;
 
 namespace BeerShop.Api.OAuth2.Providers
 {
-    public class BeerShopOAuthAuthorizationServerProvider : OAuthAuthorizationServerProvider
+    public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
 
-        public BeerShopOAuthAuthorizationServerProvider(string publicClientId)
+        public AuthorizationServerProvider(string publicClientId)
         {
             if (string.IsNullOrEmpty(publicClientId))
                 throw new ArgumentNullException(nameof(publicClientId));
@@ -33,7 +32,7 @@ namespace BeerShop.Api.OAuth2.Providers
                 return;
             }
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
-            var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
+            ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
             var properties = CreateProperties(user.UserName);
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);

@@ -1,23 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Web;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using BeerShop.Api.OAuth2.Models;
-using BeerShop.Api.OAuth2.Models.AccountBinding;
-using BeerShop.Api.OAuth2.Providers;
-using BeerShop.Api.OAuth2.Results;
-using BeerShop.Api.OAuth2.UserManagers;
-using BeerShop.Api.OAuth2.ViewModels;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+
+using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.Security.Cookies;
+using BeerShop.Api.OAuth2.Models;
+using BeerShop.Api.OAuth2.Results;
+using BeerShop.Api.OAuth2.ViewModels;
+using BeerShop.Api.OAuth2.Providers;
+using BeerShop.Api.OAuth2.UserManagers;
+using BeerShop.Api.OAuth2.Models.AccountBinding;
 
 namespace BeerShop.Api.OAuth2.Controllers
 {
@@ -25,7 +26,7 @@ namespace BeerShop.Api.OAuth2.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private const string _localLoginProvider = "Local";
+        private const string LOCAL_LOGIN_PROVIDER = "Local";
         private ApplicationUserManager _userManager;
 
         public AccountController() {}
@@ -45,7 +46,6 @@ namespace BeerShop.Api.OAuth2.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; }
 
-        // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
@@ -59,7 +59,6 @@ namespace BeerShop.Api.OAuth2.Controllers
             };
         }
 
-        // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
@@ -67,44 +66,35 @@ namespace BeerShop.Api.OAuth2.Controllers
             return Ok();
         }
 
-        // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user == null)
-                return null;
-
-            var logins = new List<UserLoginInfoViewModel>();
-
-            /*foreach (var linkedAccount in user.Logins)
-            {
-                logins.Add(new UserLoginInfoViewModel
+            if (user == null) return null;
+            var logins = user.Logins.Select(linkedAccount => new UserLoginInfoViewModel
                 {
                     LoginProvider = linkedAccount.LoginProvider,
                     ProviderKey = linkedAccount.ProviderKey
-                });
-            }
+                }).ToList();
 
             if (user.PasswordHash != null)
             {
                 logins.Add(new UserLoginInfoViewModel
                 {
-                    LoginProvider = _localLoginProvider,
+                    LoginProvider = LOCAL_LOGIN_PROVIDER,
                     ProviderKey = user.UserName,
                 });
-            }*/
+            }
 
             return new ManageInfoViewModel
             {
-                LocalLoginProvider = _localLoginProvider,
+                LocalLoginProvider = LOCAL_LOGIN_PROVIDER,
                 Login = user.UserName,
                 Logins = logins,
                 ExternalLoginProviders = GetExternalLogins(returnUrl, generateState)
             };
         }
 
-        // POST api/Account/ChangePassword
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePassword model)
         {
@@ -115,7 +105,6 @@ namespace BeerShop.Api.OAuth2.Controllers
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
-        // POST api/Account/SetPassword
         [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPassword model)
         {
@@ -125,7 +114,6 @@ namespace BeerShop.Api.OAuth2.Controllers
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
-        // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLogin model)
         {
@@ -146,14 +134,13 @@ namespace BeerShop.Api.OAuth2.Controllers
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
-        // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLogin model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             IdentityResult result;
-            if (model.LoginProvider == _localLoginProvider)
+            if (model.LoginProvider == LOCAL_LOGIN_PROVIDER)
                 result = await UserManager.RemovePasswordAsync(User.Identity.GetUserId());
             else
                 result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
@@ -162,7 +149,6 @@ namespace BeerShop.Api.OAuth2.Controllers
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
-        // GET api/Account/ExternalLogin
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
@@ -193,7 +179,7 @@ namespace BeerShop.Api.OAuth2.Controllers
                 var cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                var properties = BeerShopOAuthAuthorizationServerProvider.CreateProperties(user.UserName);
+                var properties = AuthorizationServerProvider.CreateProperties(user.UserName);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
@@ -206,7 +192,6 @@ namespace BeerShop.Api.OAuth2.Controllers
             return Ok();
         }
 
-        // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
         [Route("ExternalLogins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
@@ -235,7 +220,6 @@ namespace BeerShop.Api.OAuth2.Controllers
                 .ToList();
         }
 
-        // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(Register model)
@@ -247,7 +231,6 @@ namespace BeerShop.Api.OAuth2.Controllers
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
-        // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]

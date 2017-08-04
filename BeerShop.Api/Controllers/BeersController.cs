@@ -9,6 +9,7 @@ using Microsoft.Web.Http;
 
 namespace BeerShop.Api.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [RoutePrefix("api/beers")]
     public class BeersController : EntityControllerBase<DraftBeer>

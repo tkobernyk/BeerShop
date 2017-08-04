@@ -1,9 +1,6 @@
-﻿using System;
-using System.Web.UI.WebControls;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-
 using BeerShop.Api.OAuth2.Models;
 
 namespace BeerShop.Api.OAuth2.UserManagers

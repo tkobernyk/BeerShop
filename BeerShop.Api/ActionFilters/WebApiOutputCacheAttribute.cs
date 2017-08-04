@@ -15,7 +15,7 @@ namespace BeerShop.Api.ActionFilters
         private readonly int _clientTimeSpan;
         private readonly bool _anonymousOnly;
         private string _cachekey;
-        private static readonly ObjectCache WebApiCache = MemoryCache.Default;
+        private static readonly ObjectCache _webApiCache = MemoryCache.Default;
 
         public WebApiOutputCacheAttribute(int timespan, int clientTimeSpan, bool anonymousOnly)
         {
@@ -31,12 +31,12 @@ namespace BeerShop.Api.ActionFilters
             if (mediaTypeWithQualityHeaderValue != null)
                 _cachekey = string.Join(":", actionContext.Request.RequestUri.AbsolutePath, 
                     mediaTypeWithQualityHeaderValue.ToString());
-            if (!WebApiCache.Contains(_cachekey)) return;
-            var cache = WebApiCache.Get(_cachekey) as string;
+            if (!_webApiCache.Contains(_cachekey)) return;
+            var cache = _webApiCache.Get(_cachekey) as string;
             if (string.IsNullOrEmpty(cache)) return;
             actionContext.Response = actionContext.Request.CreateResponse();
             actionContext.Response.Content = new StringContent(cache);
-            var contenttype = WebApiCache.Get(_cachekey + ":response-ct") as MediaTypeHeaderValue ?? 
+            var contenttype = _webApiCache.Get(_cachekey + ":response-ct") as MediaTypeHeaderValue ?? 
                               new MediaTypeHeaderValue(_cachekey.Split(':')[1]);
             actionContext.Response.Content.Headers.ContentType = contenttype;
             actionContext.Response.Headers.CacheControl = SetClientCache();
@@ -44,11 +44,15 @@ namespace BeerShop.Api.ActionFilters
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            if (!WebApiCache.Contains(_cachekey))
+            var mediaTypeWithQualityHeaderValue = actionExecutedContext.Request.Headers.Accept.FirstOrDefault();
+            if (mediaTypeWithQualityHeaderValue != null)
+                _cachekey = string.Join(":", actionExecutedContext.Request.RequestUri.AbsolutePath,
+                mediaTypeWithQualityHeaderValue.ToString());
+            if (!_webApiCache.Contains(_cachekey))
             {
                 var body = actionExecutedContext.Response.Content.ReadAsStringAsync().Result;
-                WebApiCache.Add(_cachekey, body, DateTime.Now.AddSeconds(_timespan));
-                WebApiCache.Add(_cachekey + ":response-ct", actionExecutedContext.Response.Content.Headers.ContentType, 
+                _webApiCache.Add(_cachekey, body, DateTime.Now.AddSeconds(_timespan));
+                _webApiCache.Add(_cachekey + ":response-ct", actionExecutedContext.Response.Content.Headers.ContentType, 
                     DateTime.Now.AddSeconds(_timespan));
             }
             if (_isCacheable(actionExecutedContext.ActionContext))

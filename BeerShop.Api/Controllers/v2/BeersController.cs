@@ -11,6 +11,7 @@ using BeerShop.DataStore.Infrastructure.Repository;
 
 namespace BeerShop.Api.Controllers.v2
 {
+    [Authorize]
     [ApiVersion("2.0")]
     [RoutePrefix("api/v{version:apiVersion}/beers")]
     public class BeersController : EntityControllerBase<DraftBeer>

@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Routing;
 using Microsoft.Web.Http.Routing;
+using Microsoft.Owin.Security.OAuth;
 
 namespace BeerShop.Api
 {
@@ -16,7 +17,8 @@ namespace BeerShop.Api
                 }
             };
 
-            //config.SuppressDefaultHostAuthentication();
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             config.MapHttpAttributeRoutes(constraintResolver);
 
