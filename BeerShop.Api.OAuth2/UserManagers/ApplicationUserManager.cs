@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using System;
+using Microsoft.Owin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using BeerShop.Api.OAuth2.Models;
@@ -32,6 +33,20 @@ namespace BeerShop.Api.OAuth2.UserManagers
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        public ApplicationUser GetClient(Guid clientId, string clientSecret)
+        {
+            var store = Store as BeerShopUserStore;
+            var result = store?.GetUserByClientIdAndClientSecretAsync(clientId, clientSecret);
+            return result?.Result;
+        }
+
+        public ApplicationUser GetByClientId(Guid clientId)
+        {
+            var store = Store as BeerShopUserStore;
+            var result = store?.GetUserByClientIdAsync(clientId);
+            return result?.Result;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-
+using System.Text;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -179,7 +179,7 @@ namespace BeerShop.Api.OAuth2.Controllers
                 var cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                var properties = AuthorizationServerProvider.CreateProperties(user.UserName);
+                var properties = PasswordAuthorizationServerProvider.CreateProperties(user.UserName);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
@@ -226,9 +226,15 @@ namespace BeerShop.Api.OAuth2.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(),  UserName = model.Login };
+            var user = new ApplicationUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = model.Login,
+                ClientId = Guid.NewGuid(),
+                ClientSecret = GetClientSecret()
+            };
             var result = await UserManager.CreateAsync(user, model.Password);
-            return !result.Succeeded ? GetErrorResult(result) : Ok();
+            return !result.Succeeded ? GetErrorResult(result) : Ok(new KeyValuePair<Guid, string>(user.ClientId, user.ClientSecret));
         }
 
         [OverrideAuthentication]
@@ -260,6 +266,19 @@ namespace BeerShop.Api.OAuth2.Controllers
         }
 
         #region Helpers
+
+        private static string GetClientSecret()
+        {
+            var input = Guid.NewGuid().ToString();
+            using (var sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var sb = new StringBuilder(hash.Length * 2);
+                foreach (var b in hash)
+                    sb.Append(b.ToString("X2"));
+                return sb.ToString();
+            }
+        }
 
         private IAuthenticationManager Authentication => Request.GetOwinContext().Authentication;
 

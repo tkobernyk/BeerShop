@@ -1,7 +1,6 @@
 ﻿using System.Web.Http;
 using System.Collections.Generic;
 using System.Web.Http.Description;
-using System.Web.Http.Results;
 using BeerShop.DataStore.Models;
 using BeerShop.DataStore.Models.v2;
 using BeerShop.DataStore.Infrastructure.Repository;

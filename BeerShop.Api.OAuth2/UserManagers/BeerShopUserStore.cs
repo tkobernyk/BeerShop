@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ using BeerShop.Api.OAuth2.Models;
 
 namespace BeerShop.Api.OAuth2.UserManagers
 {
-    public class BeerShopUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
+    public class BeerShopUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IClientCredentialsStore<ApplicationUser>
     {
         private static readonly IList<ApplicationUser> _users = new List<ApplicationUser>();
         private static readonly IDictionary<ApplicationUser, string> _passwords = new Dictionary<ApplicationUser, string>();
@@ -61,6 +62,38 @@ namespace BeerShop.Api.OAuth2.UserManagers
         public Task<bool> HasPasswordAsync(ApplicationUser user)
         {
             return Task.FromResult(_passwords.ContainsKey(user));
+        }
+
+        public Task SetClientIdAndSecretAsync(ApplicationUser user, Guid clientId, string clientSecret)
+        {
+            if (_users.Contains(user))
+            {
+                _users.Remove(user);
+            }
+            user.ClientId = clientId;
+            user.ClientSecret = clientSecret;
+            _users.Add(user);
+            return Task.FromResult(user);
+        }
+
+        public Task<ApplicationUser> GetUserByClientIdAsync(Guid clientId)
+        {
+            var user = _users.FirstOrDefault(u => u.ClientId == clientId);
+            return Task.FromResult(user);
+        }
+
+        public Task<ApplicationUser> GetUserByClientIdAndClientSecretAsync(Guid clientId, string clientSecret)
+        {
+            var user = _users.FirstOrDefault(u => u.ClientId == clientId && u.ClientSecret == clientSecret);
+            return Task.FromResult(user);
+        }
+
+        public Task<bool> HasClientIdAndSecretAsync(ApplicationUser user)
+        {
+            var findedUser = _users.FirstOrDefault(u => u.Id == user.Id);
+            return Task.FromResult(findedUser != null && 
+                    findedUser.ClientId != Guid.Empty && 
+                    !string.IsNullOrEmpty(findedUser.ClientSecret));
         }
     }
 }

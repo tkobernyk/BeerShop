@@ -19,7 +19,7 @@ namespace BeerShop.Api.OAuth2
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
-                Provider = new AuthorizationServerProvider(PublicClientId),
+                Provider = new ClientCredentialsAuthorizationServerProvider(),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 AllowInsecureHttp = true
